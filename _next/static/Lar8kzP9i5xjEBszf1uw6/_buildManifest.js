@@ -1,25 +1,30 @@
 self.__BUILD_MANIFEST = {
   "/": [
-    "./static/chunks/0e675d87796fcac5.js"
+    "./static/chunks/99ee8fdab7312776.js"
   ],
   "/_error": [
-    "./static/chunks/579164671a9128d0.js"
+    "./static/chunks/04c9873490b106f0.js"
   ],
   "/page/[page]": [
-    "./static/chunks/f43598796e0d61f1.js"
+    "./static/chunks/914f02395efcfb93.js"
   ],
   "/posts/[id]": [
-    "./static/chunks/ccacc5654711bb49.js"
+    "./static/chunks/9bf200543711ba1d.js"
   ],
   "/tags/[tag]": [
-    "./static/chunks/e456d42ab561677d.js"
+    "./static/chunks/9fd8901d81d758eb.js"
   ],
   "/tags/[tag]/page/[page]": [
-    "./static/chunks/99ffdd84bb7f1c4b.js"
+    "./static/chunks/7404dad9c5a0ffcf.js"
   ],
   "__rewrites": {
     "afterFiles": [],
-    "beforeFiles": [],
+    "beforeFiles": [
+      {
+        "source": "/blog//_next/:path+",
+        "destination": "/blog/_next/:path+"
+      }
+    ],
     "fallback": []
   },
   "sortedPages": [
