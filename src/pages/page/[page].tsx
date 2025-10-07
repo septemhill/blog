@@ -1,10 +1,11 @@
+import { GetStaticProps, GetStaticPaths } from 'next';
 import Link from 'next/link';
-import { getSortedPostsData, PostData, getNumberOfPages } from '../lib/posts';
-import { GetStaticProps } from 'next';
-import Pagination from '../components/Pagination';
-import { POSTS_PER_PAGE } from '../lib/config';
+import { getSortedPostsData, PostData, getNumberOfPages } from '@/lib/posts';
+import Pagination from '@/components/Pagination';
+import { POSTS_PER_PAGE } from '@/lib/config';
 
-export default function Home({ 
+// This component is almost identical to the homepage, but it's for paginated pages.
+export default function Page({ 
   posts, 
   totalPages, 
   currentPage 
@@ -41,16 +42,32 @@ export default function Home({
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const totalPages = getNumberOfPages();
+  const paths = Array.from({ length: totalPages - 1 }, (_, i) => ({
+    params: { page: String(i + 2) },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const page = Number(params?.page) || 1;
   const allPostsData = getSortedPostsData();
   const totalPages = getNumberOfPages();
-  const posts = allPostsData.slice(0, POSTS_PER_PAGE);
+
+  const startIndex = (page - 1) * POSTS_PER_PAGE;
+  const endIndex = startIndex + POSTS_PER_PAGE;
+  const posts = allPostsData.slice(startIndex, endIndex);
 
   return {
     props: {
       posts,
       totalPages,
-      currentPage: 1,
+      currentPage: page,
     },
   };
 };
