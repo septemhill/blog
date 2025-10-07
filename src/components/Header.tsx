@@ -6,7 +6,7 @@ export default function Header() {
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="text-xl font-bold text-gray-800 hover:text-gray-700">
-            My Awesome Blog
+            Reflection
           </Link>
           <div className="flex space-x-4">
             <Link href="/" className="text-gray-600 hover:text-blue-500">
