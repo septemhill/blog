@@ -1,6 +1,7 @@
 ---
 title: 'Happy wife, happy life'
-date: '2025-10-08'
+date: '2025-10-07'
+time: '13:00:00'
 tags: ['碎念']
 ---
   \

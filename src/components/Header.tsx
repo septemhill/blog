@@ -12,6 +12,9 @@ export default function Header() {
             <Link href="/" className="text-gray-600 hover:text-blue-500">
               Home
             </Link>
+            <Link href="/about" className="text-gray-600 hover:text-blue-500">
+              About
+            </Link>
             {/* 您可以在這裡加入更多連結 */}
           </div>
         </div>

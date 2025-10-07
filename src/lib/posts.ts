@@ -13,6 +13,7 @@ export interface PostData {
   contentHtml?: string;
   title: string;
   date: string;
+  time?: string;
   tags: string[];
 }
 
@@ -35,16 +36,22 @@ export function getSortedPostsData(): PostData[] {
       id,
       title: matterResult.data.title,
       date: matterResult.data.date,
+      time: matterResult.data.time || null,
       tags: matterResult.data.tags,
       ...matterResult.data,
-    };
+    } as PostData;
   });
-  // Sort posts by date
+  // Sort posts by date and time
   return allPostsData.sort((a, b) => {
-    if (a.date < b.date) {
+    const dateTimeA = new Date(`${a.date}T${a.time || '00:00:00'}`);
+    const dateTimeB = new Date(`${b.date}T${b.time || '00:00:00'}`);
+
+    if (dateTimeA < dateTimeB) {
       return 1;
-    } else {
+    } else if (dateTimeA > dateTimeB) {
       return -1;
+    } else {
+      return 0;
     }
   });
 }
@@ -87,27 +94,27 @@ export async function getPostData(id: string): Promise<PostData> {
 }
 
 export function getAllTags() {
-    const allPosts = getSortedPostsData();
-    const allTags = new Set<string>();
-    allPosts.forEach(post => {
-        post.tags.forEach(tag => allTags.add(tag));
-    });
-    return Array.from(allTags);
+  const allPosts = getSortedPostsData();
+  const allTags = new Set<string>();
+  allPosts.forEach(post => {
+    post.tags.forEach(tag => allTags.add(tag));
+  });
+  return Array.from(allTags);
 }
 
 export function getPostsByTag(tag: string): PostData[] {
-    const allPosts = getSortedPostsData();
-    return allPosts.filter(post => post.tags.includes(tag));
+  const allPosts = getSortedPostsData();
+  return allPosts.filter(post => post.tags.includes(tag));
 }
 
 import { POSTS_PER_PAGE } from './config';
 
 export function getNumberOfPages(): number {
-    const allPosts = getSortedPostsData();
-    return Math.ceil(allPosts.length / POSTS_PER_PAGE);
+  const allPosts = getSortedPostsData();
+  return Math.ceil(allPosts.length / POSTS_PER_PAGE);
 }
 
 export function getNumberOfPagesByTag(tag: string): number {
-    const allPosts = getPostsByTag(tag);
-    return Math.ceil(allPosts.length / POSTS_PER_PAGE);
+  const allPosts = getPostsByTag(tag);
+  return Math.ceil(allPosts.length / POSTS_PER_PAGE);
 }

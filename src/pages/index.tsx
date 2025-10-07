@@ -18,7 +18,7 @@ export default function Home({
       {/* <h1 className="text-4xl font-bold mb-8">Blog</h1> */}
       <ul className="space-y-6">
         {posts.map(({ id, date, title, tags }) => (
-          <li key={id} className="border p-4 rounded-lg">
+          <li key={id} className="p-4 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors duration-200">
             <Link href={`/posts/${id}`} className="text-2xl font-semibold text-blue-600 hover:underline">
                 {title}
             </Link>

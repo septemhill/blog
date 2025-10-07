@@ -1,6 +1,7 @@
 ---
 title: 'Hello World'
 date: '2025-10-07'
+time: '12:00:00'
 tags: ['welcome', 'nextjs']
 ---
 
