@@ -1,5 +1,5 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
-import { getAllPostIds, getPostData, PostData } from '../../lib/posts';
+import { getAllPostIds, getPostData, PostData } from '@/lib/posts';
 import Link from 'next/link';
 
 export default function Post({ postData }: { postData: PostData }) {

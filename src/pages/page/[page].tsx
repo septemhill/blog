@@ -16,10 +16,12 @@ export default function Page({
 }) {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">Blog</h1>
       <ul className="space-y-6">
         {posts.map(({ id, date, title, tags }) => (
-          <li key={id} className="border p-4 rounded-lg">
+          <li
+            key={id}
+            className="p-4 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors duration-200"
+          >
             <Link href={`/posts/${id}`} className="text-2xl font-semibold text-blue-600 hover:underline">
                 {title}
             </Link>
@@ -27,9 +29,9 @@ export default function Page({
             <small className="text-gray-500">
               {date}
             </small>
-            <div className="mt-2">
+            <div className="mt-2 flex flex-wrap gap-2">
               {tags.map(tag => (
-                <Link key={tag} href={`/tags/${tag}`} className="text-sm bg-gray-200 text-gray-800 px-2 py-1 rounded-full mr-2 hover:bg-gray-300">
+                <Link key={tag} href={`/tags/${tag}`} className="text-sm bg-gray-600 text-gray-200 px-2 py-1 rounded-full hover:bg-gray-500 transition-colors duration-200">
                     {tag}
                 </Link>
               ))}
@@ -37,7 +39,7 @@ export default function Page({
           </li>
         ))}
       </ul>
-      <Pagination totalPages={totalPages} currentPage={currentPage} />
+      <Pagination totalPages={totalPages} currentPage={currentPage} basePath="" />
     </div>
   );
 }

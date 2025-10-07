@@ -1,28 +1,35 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Link from 'next/link';
-import { getAllTags, getPostsByTag, PostData, getNumberOfPagesByTag } from '../../lib/posts';
-import Pagination from '../../components/Pagination';
-import { POSTS_PER_PAGE } from '../../lib/config';
+import { useState } from 'react';
+import { getAllTags, getPostsByTag, PostData } from '@/lib/posts';
+import Pagination from '@/components/Pagination';
+import { POSTS_PER_PAGE } from '@/lib/config';
 
 export default function Tag({ 
-  posts, 
+  allPosts, 
   tag, 
-  totalPages, 
-  currentPage 
 }: { 
-  posts: PostData[], 
+  allPosts: PostData[], 
   tag: string, 
-  totalPages: number, 
-  currentPage: number 
 }) {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Client-side pagination logic
+  const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const postsToDisplay = allPosts.slice(startIndex, startIndex + POSTS_PER_PAGE);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8">
         Posts tagged with: <span className="text-blue-600">{tag}</span>
       </h1>
       <ul className="space-y-6">
-        {posts.map(({ id, date, title, tags }) => (
-          <li key={id} className="border p-4 rounded-lg">
+        {postsToDisplay.map(({ id, date, title, tags }) => (
+          <li
+            key={id}
+            className="p-4 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors duration-200"
+          >
             <Link href={`/posts/${id}`} className="text-2xl font-semibold text-blue-600 hover:underline">
                 {title}
             </Link>
@@ -30,9 +37,9 @@ export default function Tag({
             <small className="text-gray-500">
               {date}
             </small>
-            <div className="mt-2">
+            <div className="mt-2 flex flex-wrap gap-2">
               {tags.map(t => (
-                <Link key={t} href={`/tags/${t}`} className={`text-sm ${t === tag ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'} px-2 py-1 rounded-full mr-2 hover:bg-gray-300`}>
+                <Link key={t} href={`/tags/${t}`} className={`text-sm px-2 py-1 rounded-full transition-colors duration-200 ${t === tag ? 'bg-blue-600 text-white cursor-default' : 'bg-gray-600 text-gray-200 hover:bg-gray-500'}`}>
                     {t}
                 </Link>
               ))}
@@ -40,7 +47,9 @@ export default function Tag({
           </li>
         ))}
       </ul>
-      <Pagination totalPages={totalPages} currentPage={currentPage} basePath={`/tags/${tag}`} />
+      {totalPages > 1 && (
+        <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+      )}
        <div className="mt-8">
         <Link href="/" className="text-blue-600 hover:underline">
           ← Back to home
@@ -52,13 +61,19 @@ export default function Tag({
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const tags = getAllTags();
-  const paths = tags.map(tag => ({
+  const paths = tags.map((tag) => ({
     params: { tag },
   }));
+  // Note: We are not pre-generating /tags/[tag]/page/[pageNumber] paths.
+  // The pagination is now handled on the client-side, so only the main tag page is needed at build time.
+  // If you wanted to keep static pagination for tags, you would need a different file structure like /tags/[tag]/[page].tsx
+  // and generate all those paths here.
 
   return {
     paths,
-    fallback: false,
+    // fallback: false means pages for tags that don't exist will 404.
+    // This is fine since we are handling pagination on the client.
+    fallback: 'blocking',
   };
 };
 
@@ -69,16 +84,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
   }
   const tag = params.tag as string;
-  const allPostsForTag = getPostsByTag(tag);
-  const totalPages = getNumberOfPagesByTag(tag);
-  const posts = allPostsForTag.slice(0, POSTS_PER_PAGE);
+  const allPosts = getPostsByTag(tag);
 
   return {
     props: {
-      posts,
+      allPosts,
       tag,
-      totalPages,
-      currentPage: 1,
     },
   };
 };
