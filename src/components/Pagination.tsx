@@ -1,67 +1,71 @@
-import Link from 'next/link';
+import React from 'react';
 
-interface PaginationProps {
+export interface PaginationProps {
   totalPages: number;
   currentPage: number;
-  basePath?: string;
+  onPageChange: (page: number) => void;
 }
 
-export default function Pagination({ totalPages, currentPage, basePath = '' }: PaginationProps) {
+const Pagination: React.FC<PaginationProps> = ({
+  totalPages,
+  currentPage,
+  onPageChange,
+}) => {
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
-  const resolveHref = (page: number) => {
-    if (page === 1) {
-      return basePath || '/';
+  const handlePageClick = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      onPageChange(page);
     }
-    return `${basePath}/page/${page}`;
   };
 
+  // Helper to generate button classes
+  const getPageItemClasses = (page: number) =>
+    `flex items-center justify-center px-4 h-10 leading-tight ${
+      currentPage === page
+        ? 'text-white bg-blue-600 border-blue-600'
+        : 'text-gray-400 bg-gray-800 border-gray-700 hover:bg-gray-700 hover:text-white'
+    }`;
+
   return (
-    <nav className="flex justify-center mt-8">
+    <nav className="flex justify-end mt-8">
       <ul className="flex items-center -space-x-px h-10 text-base">
         {currentPage > 1 && (
           <li>
-            <Link
-              href={resolveHref(currentPage - 1)}
-              className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
+            <button
+              onClick={() => handlePageClick(currentPage - 1)}
+              className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-400 bg-gray-800 border border-e-0 border-gray-700 rounded-s-lg hover:bg-gray-700 hover:text-white"
             >
               <span className="sr-only">Previous</span>
               <svg className="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4"/>
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4" />
               </svg>
-            </Link>
+            </button>
           </li>
         )}
-
         {pageNumbers.map((page) => (
           <li key={page}>
-            <Link
-              href={resolveHref(page)}
-              className={`flex items-center justify-center px-4 h-10 leading-tight ${
-                currentPage === page
-                  ? 'text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700'
-                  : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700'
-              }`}
-            >
+            <button onClick={() => handlePageClick(page)} className={getPageItemClasses(page)}>
               {page}
-            </Link>
+            </button>
           </li>
         ))}
-
         {currentPage < totalPages && (
           <li>
-            <Link
-              href={resolveHref(currentPage + 1)}
-              className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
+            <button
+              onClick={() => handlePageClick(currentPage + 1)}
+              className="flex items-center justify-center px-4 h-10 leading-tight text-gray-400 bg-gray-800 border border-gray-700 rounded-e-lg hover:bg-gray-700 hover:text-white"
             >
               <span className="sr-only">Next</span>
               <svg className="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
               </svg>
-            </Link>
+            </button>
           </li>
         )}
       </ul>
     </nav>
   );
-}
+};
+
+export default Pagination;

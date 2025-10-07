@@ -8,7 +8,7 @@ const AboutPage = () => {
 
   return (
     <>
-      <Meta title="關於我" />
+      <Meta title="About" />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto text-left p-8">
           <Avatar src={`${basePath}/avatar.jpg`} alt="我的頭像" /> {/* 動態設定圖片路徑 */}
