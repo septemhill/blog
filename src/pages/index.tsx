@@ -15,7 +15,7 @@ export default function Home({
 }) {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">Blog</h1>
+      {/* <h1 className="text-4xl font-bold mb-8">Blog</h1> */}
       <ul className="space-y-6">
         {posts.map(({ id, date, title, tags }) => (
           <li key={id} className="border p-4 rounded-lg">
@@ -29,7 +29,7 @@ export default function Home({
             <div className="mt-2">
               {tags.map(tag => (
                 <Link key={tag} href={`/tags/${tag}`} className="text-sm bg-gray-200 text-gray-800 px-2 py-1 rounded-full mr-2 hover:bg-gray-300">
-                    #{tag}
+                    {tag}
                 </Link>
               ))}
             </div>

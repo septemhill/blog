@@ -30,7 +30,7 @@ export default function Page({
             <div className="mt-2">
               {tags.map(tag => (
                 <Link key={tag} href={`/tags/${tag}`} className="text-sm bg-gray-200 text-gray-800 px-2 py-1 rounded-full mr-2 hover:bg-gray-300">
-                    #{tag}
+                    {tag}
                 </Link>
               ))}
             </div>

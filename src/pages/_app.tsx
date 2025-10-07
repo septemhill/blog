@@ -1,6 +1,14 @@
-import "@/styles/globals.css";
-import type { AppProps } from "next/app";
+import type { AppProps } from 'next/app';
+import Header from '@/components/Header'; // 確保引入正確路徑的 Header
+import '@/styles/globals.css'; // 引入全域 CSS
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+export default function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <>
+      <Header />
+      <main className="pt-20">
+        <Component {...pageProps} />
+      </main>
+    </>
+  );
 }

@@ -18,7 +18,7 @@ export default function Tag({
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8">
-        Posts tagged with: <span className="text-blue-600">#{tag}</span>
+        Posts tagged with: <span className="text-blue-600">{tag}</span>
       </h1>
       <ul className="space-y-6">
         {posts.map(({ id, date, title, tags }) => (
@@ -33,7 +33,7 @@ export default function Tag({
             <div className="mt-2">
               {tags.map(t => (
                 <Link key={t} href={`/tags/${t}`} className={`text-sm ${t === tag ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'} px-2 py-1 rounded-full mr-2 hover:bg-gray-300`}>
-                    #{t}
+                    {t}
                 </Link>
               ))}
             </div>
