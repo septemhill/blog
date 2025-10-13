@@ -8,7 +8,7 @@ tags: ['typst']
 這是這個 Blog 誕生以來第一篇文章，沒什麼主要的內容。  
 主要想拿這裡來紀錄一些生活點滴，和技術性質的東西，使用標籤分類。  
 設計之初，原本只打算使用 Markdown 撰寫就好。  
-但前兩天發現 Typst 有打算做 [HTML Export](https://github.com/typst/typst/issues/721)，讓我決定改成支援 HTML 語法在文章中。  
+但前兩天發現 Typst 有打算做 @Link(HTML Export, https://github.com/typst/typst/issues/721)，讓我決定改成支援 HTML 語法在文章中。  
 這樣未來就可以使用 Typst 撰寫，格式漂亮，也可以做圖，最終輸出到 HTML 上還不會跑版。  
   \
 以下是範例:  

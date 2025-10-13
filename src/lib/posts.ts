@@ -5,6 +5,7 @@ import { remark } from 'remark';
 import remarkRehype from 'remark-rehype';
 import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';
+import remarkStyledLink from './remark-styled-link';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
@@ -76,6 +77,7 @@ export async function getPostData(id: string): Promise<PostData> {
 
   // Use remark to convert markdown into HTML string
   const processedContent = await remark()
+    .use(remarkStyledLink)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
     .use(rehypeStringify)
