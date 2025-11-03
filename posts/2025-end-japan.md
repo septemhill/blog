@@ -5,6 +5,9 @@ time: '12:00:00'
 tags: ['japan', 'murmur']
 ---
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RzyD08-w-tk?si=NPNCebUFE4BjMlaX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+  \
 這次去了久違的日本大阪，不得不說有些東西變得有點多。  
 也是這次的旅行，讓我了解為什麼日本一直在增加觀光旅遊的限制，只能說是不得不做。  
   \
